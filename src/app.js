@@ -18,9 +18,24 @@ const messagesModel = require('./dao/models/messages.model.js');
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(cookieParser("password-test-cookie"));
 
-// Configuración de Handlebars
+//Cookie 
+
+app.get("/setCookie", (req,res)=>{
+  res.cookie("userCookie", "Cookie con inf", {maxAge:10000, signed:true }).send("cookie")
+
+})
+
+app.get("/getCookie", (req, res)=>{
+  res.send(req.cookies)
+})
+
+app.get("/deleteCookie", (req, res)=>{
+  res.cookie("userCookie").send("Cookie eliminada")
+})
+
+// Cfg Handlebars
 app.engine('handlebars', expressHandlebars.engine({
   runtimeOptions: {
     allowProtoPropertiesByDefault: true,
@@ -43,7 +58,7 @@ app.use("/", viewsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/messages", messagesRouter);
 
-// Conexión a la base de datos
+// Conexion db
 const conectarBase = async () => {
   try {
     await mongoose.connect('mongodb+srv://fullua:123456789fullua@fedeu.z6zxkgk.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=FedeU');
