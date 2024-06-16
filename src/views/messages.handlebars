@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+</head>
+<body>
+    <div id="chat-container">
+        <h2>Chat</h2>
+        <div id="messages"></div>
+        <input type="text" id="user" placeholder="Correo del usuario">
+        <input type="text" id="message" placeholder="Mensaje">
+        <button onclick="sendMessage()">Enviar</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('connect', () => {
+            console.log('Conectado al servidor de WebSocket');
+        });
+
+        socket.on('message', (data) => {
+            const messages = document.getElementById('messages');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${data.user}: ${data.message}`;
+            messages.appendChild(messageElement);
+        });
+
+        function sendMessage() {
+            const user = document.getElementById('user').value;
+            const message = document.getElementById('message').value;
+            socket.emit('message', { user, message });
+            document.getElementById('message').value = '';
+        }
+    </script>
+</body>
+</html>

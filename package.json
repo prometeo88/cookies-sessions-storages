@@ -1,0 +1,33 @@
+{
+  "name": "primera-practica-integradora",
+  "version": "1.0.0",
+  "description": "primera practica integradora",
+  "main": "app.js",
+  "scripts": {
+    "test": "node --watch ./src/app.js"
+  },
+  "keywords": [
+    "proyecto",
+    "coderhouse",
+    "integradora"
+  ],
+  "author": "ULLUA FEDERICO",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prometeo88/primera_integradora.git"
+  },
+  "bugs": {
+    "url": "https://github.com/prometeo88/primera_integradora/issues"
+  },
+  "homepage": "https://github.com/prometeo88/primera_integradora#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.2",
+    "handlebars": "^4.7.8",
+    "mongoose": "^8.4.0",
+    "mongoose-paginate-v2": "^1.8.2",
+    "socket.io": "^4.7.5",
+    "ws": "^8.17.0"
+  }
+}

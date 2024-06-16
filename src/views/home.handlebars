@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+  
+    <h1>Productos Disponibles</h1>
+    <ul>
+        {{#each products.docs}}
+            <li>Nombre: {{this.title}} ID: {{this._id}}</li>
+        {{/each}}
+    </ul>
+
+    <div>
+        {{#if products.hasPrevPage}}
+            <a href="{{products.prevLink}}"><< Anterior</a>
+        {{/if}}
+        &nbsp;
+        {{products.page}}
+        &nbsp;
+        {{#if products.hasNextPage}}
+            <a href="{{products.nextLink}}">Siguiente >></a>
+        {{/if}}
+    </div>
+
+</body>
+</html>

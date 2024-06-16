@@ -1,0 +1,79 @@
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real Time Products</title>
+  </head>
+  <body>
+    <h1>Productos Actualizados en tiempo real</h1>
+
+    <h2>Formulario Eliminar Producto por ID</h2>
+    <form id="deleteForm">
+      <input
+        type="text"
+        id="idDelete"
+        placeholder="Ingrese el Id del producto a eliminar"
+        style="width: 250px"
+      />
+      <button type="submit">Eliminar Producto</button>
+    </form>
+
+    <h2>Formulario AGREGAR Producto</h2>
+<form id="addForm">
+  <input
+    type="text"
+    id="title"
+    placeholder="Ingrese el titulo del Producto "
+    style="width: 250px"
+  />
+  <input
+    type="text"
+    id="description"
+    placeholder="Ingrese la descripcion del producto "
+    style="width: 250px"
+  />
+  <input
+    type="text"
+    id="code"
+    placeholder="Ingrese el Codigo del producto "
+    style="width: 250px"
+  />
+  <input
+    type="number"
+    id="price"
+    placeholder="Ingrese el Precio del Producto "
+    style="width: 250px"
+  />
+  <input
+    type="hidden"
+    id="status"
+    value="true"
+  />
+  <input
+    type="text"
+    id="category"
+    placeholder="Ingrese la Categoria del Producto"
+    style="width: 250px"
+  />
+  <input
+    type="number"
+    id="stock"
+    placeholder="Ingrese el Stock"
+    style="width: 250px"
+  />
+
+  <button type="submit">Agregar Producto</button>
+</form>
+
+    <ul>
+      {{#each loadRTProducts}}
+        <li>Nombre: {{this.title}} ID: {{this.id}}</li>
+      {{/each}}
+    </ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/index.js"></script>
+
+  </body>
+
+</html>

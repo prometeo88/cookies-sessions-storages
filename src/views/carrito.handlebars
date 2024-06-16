@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito {{cartProduct._id}}</title>
+</head>
+<body>
+    <h1>Productos del Carrito</h1>
+    <ul>
+        {{#each cartProduct.products}}
+            <li>Nombre: {{this.product.title}} &nbsp; Cantidad: {{this.quantity}} &nbsp; ID: {{this._id}}</li>
+        {{/each}}
+    </ul>
+
+    <div>
+        {{#if pagination.hasPrevPage}}
+            <a href="{{pagination.prevLink}}"><< Anterior</a>
+        {{/if}}
+        &nbsp;
+        {{pagination.page}}
+        &nbsp;
+        {{#if pagination.hasNextPage}}
+            <a href="{{pagination.nextLink}}">Siguiente >></a>
+        {{/if}}
+    </div>
+</body>
+</html>
