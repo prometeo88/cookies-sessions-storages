@@ -1,10 +1,12 @@
 const express = require("express");
-const session = require("express");
+const session = require("express-session");
 const expressHandlebars = require("express-handlebars");
 const http = require("http");
 const socketIo = require("socket.io");
 const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
+const mongoStore = require('connect-mongo');
+const fileStore = require('session-file-store');
 
 // Configuración de la aplicación
 const app = express();
@@ -14,24 +16,43 @@ const io = socketIo(server);
 
 // Cfg la sesion
 
-app.get('/session', (req,res) =>{
-  res.send('Bienvenido')
-})
+const fileStorage = fileStore(session);
 
-app.get('/logout', (req, res) =>{
-  req.session.destroy();
-})
+app.use(session({
+  secret: 'Coder-secreto',  
+  resave: false,
+  saveUninitialized: true,
+  store: mongoStore.create({
+  mongoUrl:"mongodb+srv://fullua:123456789fullua@fedeu.z6zxkgk.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=FedeU",
+  mongoOptions:{useNewUrlParser:true,useUnifiedTopology:true},
+  ttl:15,
+  }),
+}));
 
-app.get('/login', (req, res)=>{
-  const {username, password} = req.query
-  if( username === 'fede' || password === 'fede'){
-    req.session.user = username
-  req.session.admin = true
-  res.send('logeado exitoso')}
-  else{
-res.send(err)
+// Rutas para sesiones
+app.get('/session', (req, res) => {
+  res.send('Bienvenido');
+});
+
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.send(err);
+    }
+    res.send('Logout exitoso');
+  });
+});
+
+app.get('/login', (req, res) => {
+  const { username, password } = req.query;
+  if (username === 'fede' && password === 'fede') {
+    req.session.user = username;
+    req.session.admin = true;
+    res.send('Logeado exitoso');
+  } else {
+    res.send('Error en las credenciales');
   }
-})
+});
 
 // Modelos
 const messagesModel = require('./dao/models/messages.model.js');
