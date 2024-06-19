@@ -118,8 +118,26 @@ router.get('/carts/:cid', async (req, res) => {
     }
 });
 
+router.get('/userslogin', (req, res)=>{
+    res.render('usuario')
+})
+
+router.post('/setCookie', (req, res) => {
+    const { useremail } = req.body;
+    res.cookie('user', useremail, { maxAge: 10000, httpOnly: true });
+    res.send({ result: "success", message: "Cookie set successfully" });
+  });
+  
+  router.get('/getCookie', (req, res) => {
+    const userCookie = req.signedCookies.user;
+    res.send({ user: userCookie });
+  });
+  
+  router.get('/userslogin', (req, res) => {
+    res.render('usuario');
+  });
+
 module.exports = router;
 
   
 
-module.exports = router;

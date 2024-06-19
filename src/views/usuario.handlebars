@@ -6,15 +6,46 @@
     <title>Usuarios</title>
 </head>
 <body>
-  
     <h1>Login Usuarios</h1>
-    
-    <input type="text" id="nameUser">
 
-    <input type="text" id="emailUser">
+    <form id="userform">
+        <div>
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
 
-<button method="post" type="submit">Get cookie</button>
+        <div>
+            <label for="useremail">Email:</label>
+            <input type="email" name="useremail" id="useremail" required>
+        </div>
 
+        <button type="button" id="getCookie">Get Cookie</button>
+        <button type="submit" id="setCookie">Enviar</button>
+    </form>
 
+    <script>
+        document.getElementById('userform').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const useremail = document.getElementById('useremail').value;
+
+            const response = await fetch('/setCookie', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, useremail })
+            });
+
+            const result = await response.json();
+            console.log(result.message);
+        });
+
+        document.getElementById('getCookie').addEventListener('click', async function() {
+            const response = await fetch('/getCookie');
+            const result = await response.json();
+            console.log(result);
+        });
+    </script>
 </body>
 </html>
