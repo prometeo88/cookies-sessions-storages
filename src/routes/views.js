@@ -5,6 +5,7 @@ const fs_ = require("fs");
 
 const productsModel = require("../dao/models/products.model.js");
 const cartsModel = require("../dao/models/carts.model.js");
+const { isNotAuthenticated, isAuthenticated } = require("../middleware/auth.js");
 
 
 router.get('/', async (req, res) => {
@@ -118,9 +119,17 @@ router.get('/carts/:cid', async (req, res) => {
     }
 });
 
-router.get('/userslogin', (req, res)=>{
-    res.render('usuario')
+router.get('/login', isNotAuthenticated,  (req, res)=>{
+    res.render('login')
 })
+
+router.get('/register', isNotAuthenticated, (req, res)=>{
+    res.render('register')
+})
+
+router.get('/profile', isAuthenticated, (req, res)=>{
+        res.render('profile', { user: req.session.user});
+});
 
 router.post('/setCookie', (req, res) => {
     const { useremail } = req.body;
@@ -133,10 +142,7 @@ router.post('/setCookie', (req, res) => {
     res.send({ user: userCookie });
   });
   
-  router.get('/userslogin', (req, res) => {
-    res.render('usuario');
-  });
-
+  
 module.exports = router;
 
   

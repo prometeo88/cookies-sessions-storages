@@ -29,30 +29,7 @@ app.use(session({
   }),
 }));
 
-// Rutas para sesiones
-app.get('/session', (req, res) => {
-  res.send('Bienvenido');
-});
 
-app.get('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.send(err);
-    }
-    res.send('Logout exitoso');
-  });
-});
-
-app.get('/login', (req, res) => {
-  const { username, password } = req.query;
-  if (username === 'fede' && password === 'fede') {
-    req.session.user = username;
-    req.session.admin = true;
-    res.send('Logeado exitoso');
-  } else {
-    res.send('Error en las credenciales');
-  }
-});
 
 // Modelos
 const messagesModel = require('./dao/models/messages.model.js');
@@ -94,6 +71,7 @@ const cartsRouter = require("./routes/carts.routers.js");
 const viewsRouter = require("./routes/views.js");
 const usersRouter = require("./routes/users.routers.js");
 const messagesRouter = require("./routes/messages.routers.js");
+const sessionRouter = require("./routes/api/sessions.js");
 
 
 app.use("/api/products", productsRouter);
@@ -101,6 +79,7 @@ app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/messages", messagesRouter);
+app.use("/api/sessions", sessionRouter);
 
 // Conexion db
 const conectarBase = async () => {
